@@ -23,16 +23,14 @@
 
 	angular
 	.module('image-upload-example')
-	.controller('ptImageUploaderController', function($scope) {
+	.controller('ptImageUploaderController', function($location, $anchorScroll) {
 		var vm = this;
 		vm.s3 = {};
 		vm.isSimulation = true;
 		vm.addImage = addImage;
 		vm.removeImage = removeImage;
 
-		vm.images = [];
-
-		addImage();
+		vm.images = [{}];
 
 		function addImage() {
 			var image = {};
@@ -40,10 +38,19 @@
 
 			var last = vm.images.length - 1;
 			vm.images[last].tab = true;
+
+			scroll();
 		}
 
 		function removeImage(image) {
 			vm.images.splice(vm.images.indexOf(image), 1);
+
+			scroll();
+		}
+
+		function scroll() {
+			$location.hash('image');
+			$anchorScroll();
 		}
 	});
 

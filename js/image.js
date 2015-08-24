@@ -52,7 +52,7 @@
 							var bucket = new AWS.S3({ params: { Bucket: s3.bucket } });
 
 							var filename = Date.now() + '.jpg';
-							var params = { Key: 'temp' + '/' + filename, ContentType: 'image/jpeg', Body: file, ServerSideEncryption: 'AES256' };
+							var params = { Key: filename, ContentType: 'image/jpeg', Body: file, ServerSideEncryption: 'AES256' };
 
 							bucket.putObject(params, function(err, data) {
 						  	if(err) {
@@ -62,7 +62,7 @@
 							  else {
 								// Upload Successfully Finished
 								console.log("Success!");
-								$timeout(function() {scope.image.dataURL = 'https://s3.amazonaws.com/rugapp/temp/' + filename;}, 750);
+								$timeout(function() {scope.image.dataURL = 'https://s3.amazonaws.com/' + s3.bucket + '/' + filename;}, 750);
 							  }
 							})
 							.on('httpUploadProgress',function(progress) {
